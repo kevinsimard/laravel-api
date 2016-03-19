@@ -1,0 +1,5 @@
+/public/storage/
+/vendor/
+/.env
+/.php_cs.cache
+.DS_Store

@@ -1,0 +1,4 @@
+* text=auto
+
+/README.md export-ignore
+/LICENSE.txt export-ignore
