@@ -2,7 +2,7 @@
 
 namespace App\Modules\Auth\Http\Middleware;
 
-use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Authenticate
 {
@@ -15,7 +15,7 @@ class Authenticate
     public function handle($request, \Closure $next, $guard = null)
     {
         if (\Auth::guard($guard)->guest()) {
-            return new JsonResponse(['message' => 'Unauthorized'], 401);
+            throw new HttpException(401);
         }
 
         return $next($request);
