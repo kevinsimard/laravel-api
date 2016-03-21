@@ -4,25 +4,11 @@ namespace App\Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 use App\Modules\Auth\Entities\User;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends BaseController
 {
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-    }
+    use ThrottlesLogins;
 
     /**
      * @param  array  $data
