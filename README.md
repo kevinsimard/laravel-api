@@ -11,7 +11,8 @@
     │   │   ├── Controllers
     │   │   │   └── BaseController.php
     │   │   ├── Middleware
-    │   │   │   └── AssertRequestIsAjax.php
+    │   │   │   ├── AssertJsonRequest.php
+    │   │   │   └── AssertJsonResponse.php
     │   │   ├── Requests
     │   │   │   └── BaseRequest.php
     │   │   └── Kernel.php

@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class AssertRequestIsAjax
+class AssertJsonRequest
 {
     /**
      * @param  \Illuminate\Http\Request  $request
@@ -14,7 +14,7 @@ class AssertRequestIsAjax
     public function handle($request, \Closure $next)
     {
         if (! $request->ajax() && ! $request->wantsJson()) {
-            return new JsonResponse(['message' => 'Bad Request'], 400);
+            throw new HttpException(400);
         }
 
         return $next($request);

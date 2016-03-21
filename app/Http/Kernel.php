@@ -11,7 +11,8 @@ class Kernel extends CoreKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \App\Http\Middleware\AssertRequestIsAjax::class,
+        \App\Http\Middleware\AssertJsonRequest::class,
+        \App\Http\Middleware\AssertJsonResponse::class,
     ];
 
     /**
