@@ -20,7 +20,7 @@ class AssertJsonResponse
             throw new HttpException(204);
         }
 
-        if ($response instanceof JsonResponse) {
+        if (! $response instanceof JsonResponse) {
             throw new HttpException(500);
         }
 
