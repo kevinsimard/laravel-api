@@ -9,15 +9,34 @@ class Authenticate
     /**
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  string  ...$guards
      * @return mixed
      */
-    public function handle($request, \Closure $next, $guard = null)
+    public function handle($request, \Closure $next, ...$guards)
     {
-        if (\Auth::guard($guard)->guest()) {
-            throw new HttpException(401);
+        if ($this->check($guards)) {
+            return $next($request);
         }
 
-        return $next($request);
+        throw new HttpException(401);
+    }
+
+    /**
+     * @param  array  $guards
+     * @return bool
+     */
+    protected function check(array $guards)
+    {
+        if (empty($guards)) {
+            return \Auth::check();
+        }
+
+        foreach ($guards as $guard) {
+            if (\Auth::guard($guard)->check()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
