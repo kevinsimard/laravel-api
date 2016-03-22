@@ -14,7 +14,7 @@ class AssertJsonRequest
     public function handle($request, \Closure $next)
     {
         if (! $request->ajax() && ! $request->wantsJson()) {
-            throw new HttpException(400);
+            throw new HttpException(415);
         }
 
         return $next($request);
