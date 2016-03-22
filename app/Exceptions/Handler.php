@@ -55,7 +55,7 @@ class Handler extends CoreHandler
             $message = $this->getMessageByCode($code);
         }
 
-        return response()->json(compact('message'), $code);
+        return response()->json(compact('code', 'message'), $code);
     }
 
     /**
