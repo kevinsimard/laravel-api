@@ -8,7 +8,7 @@ class DatabaseSeeder extends Seeder
      * @var array
      */
     protected $factories = [
-        App\Modules\Auth\Entities\User::class,
+        \App\Modules\Auth\Entities\User::class,
     ];
 
     /**
