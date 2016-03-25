@@ -13,7 +13,7 @@ class AssertJsonRequest
      */
     public function handle($request, \Closure $next)
     {
-        if (! $request->ajax() && ! $request->wantsJson()) {
+        if (! $request->ajax() && ! $request->wantsJson() && ! $request->isJson()) {
             throw new HttpException(415);
         }
 
