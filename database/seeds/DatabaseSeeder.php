@@ -1,25 +1,24 @@
 <?php
 
+use Faker\Generator;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * @var array
+     * @param  \Faker\Generator  $faker
+     * @return void
      */
-    protected $factories = [
-        \App\Modules\Auth\Entities\User::class,
-    ];
+    public function __construct(Generator $faker)
+    {
+        $this->faker = $faker;
+    }
 
     /**
      * @return void
      */
     public function run()
     {
-        foreach ($this->factories as $entityClass) {
-            foreach (range(0, rand(5, 15)) as $i) {
-                factory($entityClass)->create();
-            }
-        }
+        $this->call(UserSeeder::class);
     }
 }
