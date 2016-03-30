@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AssertJsonResponse
@@ -18,10 +17,6 @@ class AssertJsonResponse
 
         if (empty($response->getContent())) {
             throw new HttpException(204);
-        }
-
-        if (! $response instanceof JsonResponse) {
-            throw new HttpException(500);
         }
 
         return $next($request);
