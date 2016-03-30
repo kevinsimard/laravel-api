@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as CoreHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,7 +20,7 @@ class Handler extends CoreHandler
     protected $dontReport = [
         \Illuminate\Auth\Access\AuthorizationException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-        \Illuminate\Foundation\Validation\ValidationException::class,
+        \Illuminate\Validation\ValidationException::class,
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
     ];
 
@@ -38,7 +40,8 @@ class Handler extends CoreHandler
      */
     public function render($request, Exception $e)
     {
-        $code = $e->getCode();
+        $errors = [];
+        $code = $e->getCode() ?: 500;
         $message = $e->getMessage();
 
         if ($e instanceof ModelNotFoundException) {
@@ -48,6 +51,9 @@ class Handler extends CoreHandler
         } elseif (method_exists($e, 'getResponse') && $e->getResponse()) {
             $code = $e->getResponse()->getStatusCode();
             $message = $e->getResponse()->getContent();
+        } elseif ($e instanceof ValidationException) {
+            $errors = $e->validator->messages();
+            $e = new HttpException(422, $e->getMessage());
         }
 
         if ($this->isHttpException($e)) {
@@ -55,7 +61,13 @@ class Handler extends CoreHandler
             $message = $this->getMessageByCode($code);
         }
 
-        return response()->json(compact('code', 'message'), $code);
+        if (config('app.debug', false)) {
+            $backtrace = $this->getDebugInfo($e);
+
+            return response()->json(compact('code', 'message', 'errors', 'backtrace'), $code);
+        }
+
+        return response()->json(compact('code', 'message', 'errors'), $code);
     }
 
     /**
@@ -66,5 +78,14 @@ class Handler extends CoreHandler
     {
         return isset(Response::$statusTexts[$code])
             ? Response::$statusTexts[$code] : 'Unknown Status';
+    }
+
+    /**
+     * @param  \Exception  $exception
+     * @return array
+     */
+    protected function getDebugInfo(Exception $exception)
+    {
+        return FlattenException::create($exception)->toArray();
     }
 }
