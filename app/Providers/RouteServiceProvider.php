@@ -32,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->group([
             'prefix' => 'v1',
             'middleware' => ['api'],
+            'namespace' => $this->namespace,
         ], function ($router) {
             //
         });
