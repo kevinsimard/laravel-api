@@ -57,7 +57,8 @@
     │   │   ├── 2015_10_12_000000_create_user_table.php
     │   │   └── 2015_10_12_100000_create_password_reset_table.php
     │   ├── seeds
-    │   │   └── DatabaseSeeder.php
+    │   │   ├── DatabaseSeeder.php
+    │   │   └── UserSeeder.php
     │   └── .gitignore
     ├── public
     │   ├── .htaccess
