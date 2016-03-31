@@ -11,8 +11,6 @@ class Kernel extends CoreKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \App\Http\Middleware\AssertJsonRequest::class,
-        \App\Http\Middleware\AssertJsonResponse::class,
     ];
 
     /**
@@ -21,6 +19,8 @@ class Kernel extends CoreKernel
     protected $middlewareGroups = [
         'api' => [
             'throttle:60,1',
+            \App\Http\Middleware\AssertJsonRequest::class,
+            \App\Http\Middleware\AssertJsonResponse::class,
         ],
     ];
 
