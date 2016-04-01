@@ -40,20 +40,41 @@ class Handler extends CoreHandler
      */
     public function render($request, Exception $e)
     {
+        list($code, $message, $errors) = $this->getExceptionParts($e);
+
+        if (config('app.debug', false)) {
+            $backtrace = $this->getDebugInfo($e);
+
+            return response()->json(compact([
+                'code', 'message', 'errors', 'backtrace',
+            ]), $code);
+        }
+
+        return response()->json(compact([
+            'code', 'message', 'errors',
+        ]), $code);
+    }
+
+    /**
+     * @param  \Exception  $e
+     * @return array
+     */
+    protected function getExceptionParts(Exception $e)
+    {
         $errors = [];
         $code = $e->getCode() ?: 500;
         $message = $e->getMessage();
 
-        if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
-        } elseif ($e instanceof AuthorizationException) {
-            $e = new HttpException(403, $e->getMessage());
-        } elseif (method_exists($e, 'getResponse') && $e->getResponse()) {
+        if (method_exists($e, 'getResponse') && $e->getResponse()) {
             $code = $e->getResponse()->getStatusCode();
             $message = $e->getResponse()->getContent();
         } elseif ($e instanceof ValidationException) {
             $errors = $e->validator->messages();
             $e = new HttpException(422, $e->getMessage());
+        } elseif ($e instanceof AuthorizationException) {
+            $e = new HttpException(403, $e->getMessage());
+        } elseif ($e instanceof ModelNotFoundException) {
+            $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
         if ($this->isHttpException($e)) {
@@ -61,13 +82,7 @@ class Handler extends CoreHandler
             $message = $this->getMessageByCode($code);
         }
 
-        if (config('app.debug', false)) {
-            $backtrace = $this->getDebugInfo($e);
-
-            return response()->json(compact('code', 'message', 'errors', 'backtrace'), $code);
-        }
-
-        return response()->json(compact('code', 'message', 'errors'), $code);
+        return [$code, $message, $errors];
     }
 
     /**
