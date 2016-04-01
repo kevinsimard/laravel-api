@@ -2,41 +2,27 @@
 
 namespace App\Modules\Auth\Http\Middleware;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Modules\Auth\Entities\User;
 
 class Authenticate
 {
     /**
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string  ...$guards
      * @return mixed
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function handle($request, \Closure $next, ...$guards)
+    public function handle($request, \Closure $next)
     {
-        if ($this->check($guards)) {
-            return $next($request);
-        }
+        $apiToken = $request->input('api_token');
 
-        throw new HttpException(401);
-    }
+        $user = User::whereApiToken($apiToken)->first();
 
-    /**
-     * @param  array  $guards
-     * @return bool
-     */
-    protected function check(array $guards)
-    {
-        if (empty($guards)) {
-            return \Auth::check();
-        }
+        abort_if(is_null($user), 401);
 
-        foreach ($guards as $guard) {
-            if (\Auth::guard($guard)->check()) {
-                return true;
-            }
-        }
+        auth()->setUser($user);
 
-        return false;
+        return $next($request);
     }
 }
