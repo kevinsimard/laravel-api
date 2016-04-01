@@ -24,6 +24,6 @@ class AssertJsonResponse
             abort_if(is_null(json_decode($content)), 400);
         }
 
-        return $next($request);
+        return $response;
     }
 }
