@@ -13,4 +13,12 @@ abstract class BaseRequest extends FormRequest
     {
         return [];
     }
+
+    /**
+     * @return bool
+     */
+    protected function passesAuthorization()
+    {
+        return true;
+    }
 }
