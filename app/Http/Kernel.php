@@ -29,6 +29,7 @@ class Kernel extends CoreKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Modules\Auth\Http\Middleware\Authenticate::class,
+        'can' => \Illuminate\Foundation\Auth\Access\Middleware\Authorize::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }
