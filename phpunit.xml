@@ -15,7 +15,10 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">app/</directory>
+            <directory suffix=".php">app/Modules/</directory>
+            <exclude>
+                <directory suffix=".php">app/Modules/*/Entities/</directory>
+            </exclude>
         </whitelist>
     </filter>
     <php>
