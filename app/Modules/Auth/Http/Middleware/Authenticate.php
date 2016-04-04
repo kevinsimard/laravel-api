@@ -17,7 +17,8 @@ class Authenticate
     {
         $apiToken = $request->input('api_token');
 
-        $user = User::whereApiToken($apiToken)->first();
+        $user = User::whereNotNull('api_token')
+            ->whereApiToken($apiToken)->first();
 
         abort_if(is_null($user), 401);
 
