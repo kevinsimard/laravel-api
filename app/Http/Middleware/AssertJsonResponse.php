@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\JsonResponse;
-
 class AssertJsonResponse
 {
     /**
@@ -17,7 +15,7 @@ class AssertJsonResponse
     {
         $response = $next($request);
 
-        if (! $response instanceof JsonResponse) {
+        if ($response->status() === 200) {
             $content = $response->getContent();
 
             abort_if(empty($content), 204);
