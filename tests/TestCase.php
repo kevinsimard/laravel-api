@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Application
 use Illuminate\Foundation\Testing\TestCase as CoreTestCase;
 
 class TestCase extends CoreTestCase
@@ -13,7 +14,7 @@ class TestCase extends CoreTestCase
     /**
      * @return \Illuminate\Foundation\Application
      */
-    public function createApplication()
+    public function createApplication(): Application
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 

@@ -9,17 +9,9 @@ use Illuminate\Validation\ValidationException;
 abstract class BaseRequest extends FormRequest
 {
     /**
-     * @return array
-     */
-    public function rules()
-    {
-        return [];
-    }
-
-    /**
      * @return bool
      */
-    protected function passesAuthorization()
+    public function authorize(): bool
     {
         return true;
     }
