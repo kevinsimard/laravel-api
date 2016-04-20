@@ -23,9 +23,6 @@
     │   │       ├── Entities
     │   │       │   └── User.php
     │   │       ├── Http
-    │   │       │   ├── Controllers
-    │   │       │   │   ├── AuthController.php
-    │   │       │   │   └── PasswordController.php
     │   │       │   └── Middleware
     │   │       │       └── Authenticate.php
     │   │       └── Providers
@@ -54,8 +51,7 @@
     │   ├── factories
     │   │   └── UserFactory.php
     │   ├── migrations
-    │   │   ├── 2015_10_12_000000_create_user_table.php
-    │   │   └── 2015_10_12_100000_create_password_reset_table.php
+    │   │   └── 2015_10_12_000000_create_user_table.php
     │   ├── seeds
     │   │   ├── DatabaseSeeder.php
     │   │   └── UserSeeder.php
@@ -69,7 +65,6 @@
     │   │   └── en
     │   │       ├── auth.php
     │   │       ├── pagination.php
-    │   │       ├── passwords.php
     │   │       └── validation.php
     │   └── views
     │       └── vendor

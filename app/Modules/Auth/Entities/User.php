@@ -17,25 +17,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
     ];
 
     /**
      * @var array
      */
     protected $hidden = [
-        'password',
         'api_token',
     ];
-
-    /**
-     * @param  mixed  $value
-     * @return $this
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-
-        return $this;
-    }
 }
