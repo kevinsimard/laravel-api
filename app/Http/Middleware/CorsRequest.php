@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
+
 class CorsRequest
 {
     /**
@@ -9,7 +11,7 @@ class CorsRequest
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next)
     {
         $response = $next($request);
 

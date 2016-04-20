@@ -2,7 +2,7 @@
 
 namespace App\Modules\Auth\Http\Middleware;
 
-use App\Modules\Auth\Entities\User;
+use Closure;
 
 class Authenticate
 {
@@ -13,16 +13,11 @@ class Authenticate
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next)
     {
-        $apiToken = $request->input('api_token');
-
-        $user = User::whereNotNull('api_token')
-            ->whereApiToken($apiToken)->first();
-
-        abort_if(is_null($user), 401);
-
-        auth()->setUser($user);
+        if (auth()->guest()) {
+            abort(401);
+        }
 
         return $next($request);
     }

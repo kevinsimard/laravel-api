@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
+
 class AssertJsonRequest
 {
     /**
@@ -11,9 +13,9 @@ class AssertJsonRequest
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (! $request->ajax() && ! $request->wantsJson() && ! $request->isJson()) {
+        if (! $request->ajax() && ! $request->wantsJson()) {
             abort(415);
         }
 

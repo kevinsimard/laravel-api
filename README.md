@@ -1,4 +1,4 @@
-# Laravel Api Structure
+# Laravel API Structure
 
 ## Code Structure
 
@@ -12,7 +12,8 @@
     │   │   │   └── BaseController.php
     │   │   ├── Middleware
     │   │   │   ├── AssertJsonRequest.php
-    │   │   │   └── AssertJsonResponse.php
+    │   │   │   ├── AssertNonEmptyResponse.php
+    │   │   │   └── CorsRequest.php
     │   │   ├── Requests
     │   │   │   └── BaseRequest.php
     │   │   └── Kernel.php
@@ -89,7 +90,6 @@
     ├── .gitattributes
     ├── .gitignore
     ├── .php_cs
-    ├── LICENSE.txt
     ├── README.md
     ├── artisan
     ├── composer.json
