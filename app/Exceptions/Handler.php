@@ -3,14 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as CoreHandler;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends CoreHandler
 {
@@ -36,71 +32,54 @@ class Handler extends CoreHandler
     /**
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $e
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $e): Response
     {
-        list($code, $message, $errors) = $this->getExceptionParts($e);
-
-        if (config('app.debug', false)) {
-            $backtrace = $this->getDebugInfo($e);
-
-            return response()->json(compact([
-                'code', 'message', 'errors', 'backtrace',
-            ]), $code);
+        if ($e instanceof ValidationException) {
+            return response()->json([
+                'code' => $code = 422,
+                'message' => $this->getHttpMessage($code),
+                'errors' => $e->validator->getMessageBag()->toArray(),
+            ], $code);
         }
 
-        return response()->json(compact([
-            'code', 'message', 'errors',
-        ]), $code);
+        return parent::render($request, $e);
+    }
+
+    /**
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $e): Response
+    {
+        $code = $e->getStatusCode();
+        $message = $this->getHttpMessage($code);
+
+        return response()->json([
+            'code' => $code,
+            'message' => $message,
+        ], $code, $e->getHeaders());
     }
 
     /**
      * @param  \Exception  $e
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function getExceptionParts(Exception $e)
+    protected function convertExceptionToResponse(Exception $e): Response
     {
-        $errors = [];
-        $code = $e->getCode() ?: 500;
-        $message = $e->getMessage();
-
-        if (method_exists($e, 'getResponse') && $e->getResponse()) {
-            $code = $e->getResponse()->getStatusCode();
-            $message = $e->getResponse()->getContent();
-        } elseif ($e instanceof ValidationException) {
-            $errors = $e->validator->messages();
-            $e = new HttpException(422, $e->getMessage());
-        } elseif ($e instanceof AuthorizationException) {
-            $e = new HttpException(403, $e->getMessage());
-        } elseif ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
-        }
-
-        if ($this->isHttpException($e)) {
-            $code = $e->getStatusCode();
-            $message = $this->getMessageByCode($code);
-        }
-
-        return [$code, $message, $errors];
+        return response()->json([
+            'code' => 500,
+            'message' => $e->getMessage(),
+        ], 500);
     }
 
     /**
      * @param  int  $code
      * @return string
      */
-    protected function getMessageByCode($code)
+    protected function getHttpMessage(int $code): string
     {
-        return isset(Response::$statusTexts[$code])
-            ? Response::$statusTexts[$code] : 'Unknown Status';
-    }
-
-    /**
-     * @param  \Exception  $exception
-     * @return array
-     */
-    protected function getDebugInfo(Exception $exception)
-    {
-        return FlattenException::create($exception)->toArray();
+        return Response::$statusTexts[$code] ?? 'Unknown Status';
     }
 }
