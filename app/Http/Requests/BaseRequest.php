@@ -26,4 +26,14 @@ abstract class BaseRequest extends FormRequest
     {
         throw new ValidationException($validator);
     }
+
+    /**
+     * @return void
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     */
+    protected function failedAuthorization()
+    {
+        abort(403);
+    }
 }
