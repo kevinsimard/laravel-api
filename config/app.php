@@ -29,6 +29,9 @@ return [
     // supported: "single", "daily", "syslog", "errorlog"
     'log' => env('APP_LOG', 'daily'),
 
+    // application log level
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
     // autoloaded service providers
     'providers' => [
         Illuminate\Auth\AuthServiceProvider::class,

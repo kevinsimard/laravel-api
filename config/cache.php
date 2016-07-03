@@ -2,6 +2,7 @@
 
 return [
     // default cache store
+    // supported: "apc", "array", "database", "file", "memcached", "redis"
     'default' => env('CACHE_DRIVER', 'file'),
 
     // cache stores

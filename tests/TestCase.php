@@ -4,7 +4,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application
 use Illuminate\Foundation\Testing\TestCase as CoreTestCase;
 
-class TestCase extends CoreTestCase
+abstract class TestCase extends CoreTestCase
 {
     /**
      * @var string

@@ -2,6 +2,7 @@
 
 return [
     // default broadcaster
+    // supported: "pusher", "redis", "log"
     'default' => env('BROADCAST_DRIVER', 'pusher'),
 
     // broadcast connections
