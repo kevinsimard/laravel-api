@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 
 // create the application
-$app = new Application(realpath(__DIR__.'/../'));
+$app = new Application(realpath(__DIR__."/../"));
 
 // bind important interfaces
 $app->singleton(Illuminate\Contracts\Http\Kernel::class, App\Http\Kernel::class);

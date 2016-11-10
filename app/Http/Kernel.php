@@ -17,8 +17,8 @@ class Kernel extends CoreKernel
      * @var array
      */
     protected $middlewareGroups = [
-        'api' => [
-            'throttle:60,1',
+        "api" => [
+            "throttle:60,1",
             \App\Http\Middleware\AssertJsonRequest::class,
             \App\Http\Middleware\AssertNonEmptyResponse::class,
         ],
@@ -28,8 +28,8 @@ class Kernel extends CoreKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Modules\Auth\Http\Middleware\Authenticate::class,
-        'can' => \Illuminate\Foundation\Auth\Access\Middleware\Authorize::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        "auth" => \App\Modules\Auth\Http\Middleware\Authenticate::class,
+        "can" => \Illuminate\Foundation\Auth\Access\Middleware\Authorize::class,
+        "throttle" => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }

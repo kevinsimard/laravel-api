@@ -3,46 +3,46 @@
 return [
     // default cache store
     // supported: "apc", "array", "database", "file", "memcached", "redis"
-    'default' => env('CACHE_DRIVER', 'file'),
+    "default" => env("CACHE_DRIVER", "file"),
 
     // cache stores
-    'stores' => [
-        'apc' => [
-            'driver' => 'apc',
+    "stores" => [
+        "apc" => [
+            "driver" => "apc",
         ],
 
-        'array' => [
-            'driver' => 'array',
+        "array" => [
+            "driver" => "array",
         ],
 
-        'database' => [
-            'driver' => 'database',
-            'table' => 'cache',
-            'connection' => null,
+        "database" => [
+            "driver" => "database",
+            "table" => "cache",
+            "connection" => null,
         ],
 
-        'file' => [
-            'driver' => 'file',
-            'path' => storage_path('framework/cache'),
+        "file" => [
+            "driver" => "file",
+            "path" => storage_path("framework/cache"),
         ],
 
-        'memcached' => [
-            'driver' => 'memcached',
-            'servers' => [
+        "memcached" => [
+            "driver" => "memcached",
+            "servers" => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
-                    'weight' => 100,
+                    "host" => env("MEMCACHED_HOST", "127.0.0.1"),
+                    "port" => env("MEMCACHED_PORT", 11211),
+                    "weight" => 100,
                 ],
             ],
         ],
 
-        'redis' => [
-            'driver' => 'redis',
-            'connection' => 'default',
+        "redis" => [
+            "driver" => "redis",
+            "connection" => "default",
         ],
     ],
 
     // cache key prefix
-    'prefix' => 'laravel',
+    "prefix" => "laravel",
 ];

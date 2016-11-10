@@ -16,9 +16,9 @@ class CorsRequest
         $response = $next($request);
 
         foreach ([
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers' => 'Content-Type',
+            "Access-Control-Allow-Origin" => "*",
+            "Access-Control-Allow-Methods" => "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers" => "Content-Type",
         ] as $key => $value) {
             $response->header($key, $value);
         }

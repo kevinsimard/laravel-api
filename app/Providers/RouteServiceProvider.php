@@ -10,7 +10,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * @var string
      */
-    protected $namespace = 'App\Modules';
+    protected $namespace = "App\Modules";
 
     /**
      * @param  \Illuminate\Routing\Router  $router
@@ -30,9 +30,9 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $router->group([
-            'prefix' => 'v1',
-            'middleware' => ['api'],
-            'namespace' => $this->namespace,
+            "prefix" => "v1",
+            "middleware" => ["api"],
+            "namespace" => $this->namespace,
         ], function ($router) {
             //
         });

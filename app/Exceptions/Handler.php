@@ -38,9 +38,9 @@ class Handler extends CoreHandler
     {
         if ($e instanceof ValidationException) {
             return response()->json([
-                'code' => $code = 422,
-                'message' => $this->getHttpMessage($code),
-                'errors' => $e->validator->getMessageBag()->toArray(),
+                "code" => $code = 422,
+                "message" => $this->getHttpMessage($code),
+                "errors" => $e->validator->getMessageBag()->toArray(),
             ], $code);
         }
 
@@ -57,8 +57,8 @@ class Handler extends CoreHandler
         $message = $this->getHttpMessage($code);
 
         return response()->json([
-            'code' => $code,
-            'message' => $message,
+            "code" => $code,
+            "message" => $message,
         ], $code, $e->getHeaders());
     }
 
@@ -69,8 +69,8 @@ class Handler extends CoreHandler
     protected function convertExceptionToResponse(Exception $e): Response
     {
         return response()->json([
-            'code' => 500,
-            'message' => $e->getMessage(),
+            "code" => 500,
+            "message" => $e->getMessage(),
         ], 500);
     }
 
@@ -80,6 +80,6 @@ class Handler extends CoreHandler
      */
     protected function getHttpMessage(int $code): string
     {
-        return Response::$statusTexts[$code] ?? 'Unknown Status';
+        return Response::$statusTexts[$code] ?? "Unknown Status";
     }
 }

@@ -9,14 +9,14 @@ abstract class TestCase extends CoreTestCase
     /**
      * @var string
      */
-    protected $baseUrl = 'http://localhost';
+    protected $baseUrl = "http://localhost";
 
     /**
      * @return \Illuminate\Foundation\Application
      */
     public function createApplication(): Application
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__."/../bootstrap/app.php";
 
         $app->make(Kernel::class)->bootstrap();
 

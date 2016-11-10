@@ -9,20 +9,20 @@ class User extends Authenticatable
     /**
      * @var string
      */
-    protected $table = 'user';
+    protected $table = "user";
 
     /**
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        "name",
+        "email",
     ];
 
     /**
      * @var array
      */
     protected $hidden = [
-        'api_token',
+        "api_token",
     ];
 }
