@@ -90,6 +90,7 @@
     ├── .gitattributes
     ├── .gitignore
     ├── .php_cs
+    ├── LICENSE.md
     ├── README.md
     ├── artisan
     ├── composer.json
